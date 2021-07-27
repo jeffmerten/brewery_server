@@ -36,11 +36,8 @@ module Service
     end
 
     def retrieve_from_service
-
-      # TODO: Fix this so it queries the closest based on the lat/lon parameters
-      search = Search.first
-
-      # TODO: Check if the search parameters are within cached result
+      max_search_radius = 5000
+      search = Search.within(@latitude, @longitude, max_search_radius).nearest(@latitude, @longitude).first
       if search && search.response && within_search_radius?(search.lonlat.y, @latitude, search.lonlat.x, @longitude, search.radius, @search_distance)
         cached_response = JSON.parse(search.response)
         breweries = cached_response.map do |brewery_json|

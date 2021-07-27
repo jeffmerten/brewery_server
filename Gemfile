@@ -25,6 +25,15 @@ gem 'puma', '~> 3.11'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Use postgres as the database for Active Record
+gem 'pg', '~> 0.18'
+# Used for http requests made to open api
+gem 'httparty', '~> 0.13'
+# Used for geo calculations
+gem 'geocoder', '~> 1.5'
+# Used to provide active record extension for PostGIS
+gem 'activerecord-postgis-adapter', '~> 5.2'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 

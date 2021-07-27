@@ -41,7 +41,7 @@ module Service
       search = Search.first
 
       # TODO: Check if the search parameters are within cached result
-      if search && search.response
+      if search && search.response && within_search_radius?(search.lonlat.y, @latitude, search.lonlat.x, @longitude, search.radius, @search_distance)
         cached_response = JSON.parse(search.response)
         breweries = cached_response.map do |brewery_json|
           Brewery.new(brewery_json)

@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_07_26_125435) do
     t.geography "lonlat", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["lonlat"], name: "index_searches_on_lonlat", using: :gist
   end
 
 end

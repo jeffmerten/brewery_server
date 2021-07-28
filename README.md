@@ -86,3 +86,12 @@ The OpenBrewery API is an open service with no authenication, thus subject to do
 2) The result for this query will be compared with the request parameters to determine if the search area requested is completely within the cached result. If this is case, the cached result will be leveraged and any results that are not applicable will be filtered down before the JSON response to returned to the client.
 3) If the closest result is not a complete match, a service call will be made to the OpenBrewery API that contains the lat/lon from the request parameters as well. Service requests will be made until the results are at or above the requested search radius.
 4) The fetched result from the OpenAPI will be saved to the database along with the appropriate radius from the result set along with the original lat/lon. If the previous result was a subset of this result, that prior result will be deleted.
+
+## Things to improve on
+1) Test coverage is very sparse right now. The following should be added as scenarios and assertions:
+  • Cache hits within search radius
+  • Cache misses/failures
+  • Assertions on the service requests made, including paged results
+2) If the requested search is a superset of the retrieved cache result, the previous cached result should be deleted once the fetched search results are all retrieved. 
+3) Memcache can be leveraged to improve response times. 
+4) The SQL statements can likely be further optimized. Additionally cached results from 2+ regions could potentially contain the requested search region. 

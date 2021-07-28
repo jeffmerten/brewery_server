@@ -1,0 +1,28 @@
+[
+  {
+    "id": 15454,
+    "name": "Ute Pass Brewing Co",
+    "type": "brewpub",
+    "street": "209 E Midland Ave",
+    "city": "Woodland Park",
+    "zip": "80863-3101",
+    "latitude": "38.9944899",
+    "longitude": "-105.0513357",
+    "phone": "7196868722",
+    "distance": 0.03568134383517856,
+    "websiteUrl": "http://www.utepassbrewingcompany.com"
+  },
+  {
+    "id": 8845,
+    "name": "BierWerks",
+    "type": "brewpub",
+    "street": "121 E. Midland Ave",
+    "city": "Woodland Park",
+    "zip": "80863",
+    "latitude": "38.9941414",
+    "longitude": "-105.0519462",
+    "phone": "7196868100",
+    "distance": 0.056253775385342514,
+    "websiteUrl": "http://www.bierwerks.com"
+  }
+]

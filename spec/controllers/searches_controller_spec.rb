@@ -44,8 +44,7 @@ RSpec.describe SearchesController do
     response_error = Net::HTTPInternalServerError
     error = ::HTTParty::ResponseError.new(response_error)
     allow(::HTTParty).to receive(:get).with(anything).and_raise(error)
-    get(:show, params: {latitude: 42.0190131, longitude: -115.2752297, distance: 1})
-    expect(response.code).to eql '500'
+    expect { get(:show, params: {latitude: 42.0190131, longitude: -115.2752297, distance: 1}) }.to raise_error
   end
 
 end

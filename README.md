@@ -107,4 +107,5 @@ The OpenBrewery API is an open service with no authentication, thus subject to d
   - Assertions on the service requests made, including paged results
 2) If the requested search is a superset of the retrieved cache result, the previous cached result should be deleted once the fetched search results are all retrieved. 
 3) Memcache can be leveraged to improve response times. 
-4) The SQL statements can likely be further optimized. Additionally cached results from 2+ regions could potentially contain the requested search region. 
+4) The SQL statements can likely be further optimized. Additionally cached results from 2+ regions could potentially contain the requested search region.
+5) The class/module structure can be improved under app/models.

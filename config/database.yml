@@ -18,5 +18,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL").gsub(/postgres/, 'postgis') %>
   database: brewery_prod

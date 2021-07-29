@@ -3,7 +3,7 @@ require 'geocoder'
 module DistanceHelper
 
   def distance_between(lat1, lat2, lon1, long2)
-    Geocoder::Calculations.distance_between([lat1,lon1],[lat2,long2])
+    Geocoder::Calculations.distance_between([lat1, lon1], [lat2, long2])
   end
 
   def within_search_radius?(origin_lat, point_lat, origin_long, point_lon, origin_rad, point_rad)

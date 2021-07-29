@@ -1,4 +1,5 @@
 class Brewery
+  include BrewerySerializer
 
   attr_accessor :json
   attr_accessor :id, :name, :type, :street, :city, :state, :zip, :latitude, :longitude, :phone, :website_url, :tags, :distance
@@ -23,26 +24,15 @@ class Brewery
     # The types from openbrewerydb are: micro, regional, brewpub, large, planning, bar, contract, proprietor
     # planning type is one that is not open yet.
     # bar is not currently returned, but will be evaluated later.
-    return false if ['planning','bar'].include?(@type)
+    return false if ['planning', 'bar'].include?(@type)
 
     # This project might not have a name, but the breweries we return in our API must have one.
     return false unless @name
     true
   end
 
-  def as_json(options = nil)
-    {
-      id: @id,
-      name: @name,
-      type: @type,
-      street: @street,
-      city: @city,
-      zip: @zip,
-      latitude: @latitude,
-      longitude: @longitude,
-      phone: @phone,
-      distance: @distance,
-      websiteUrl: @website_url
-    }.compact
+  def self.within(distance, latitude, longitude)
+    service = Service::OpenBreweryDb.new(distance: distance, latitude: latitude, longitude: longitude)
+    service.retrieve_breweries.sort_by(&:distance)
   end
 end

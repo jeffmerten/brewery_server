@@ -5,11 +5,9 @@ module Service
   class OpenBreweryDb
     include DistanceHelper
 
-    attr_accessor :params
     attr_accessor :latitude, :longitude, :search_distance
 
     def initialize(params = {})
-      @params = params
       @latitude = params[:latitude].to_f
       @longitude = params[:longitude].to_f
       dist = params[:distance] || '25'
@@ -18,8 +16,7 @@ module Service
 
     def retrieve_breweries
       breweries = retrieve_from_service
-      all_breweries = filtered_breweries(breweries)
-      all_breweries.sort_by(&:distance)
+      filtered_breweries(breweries)
     end
 
     private

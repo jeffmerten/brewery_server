@@ -2,14 +2,26 @@
 
 Rails server for returning nearby breweries by leveraging [OpenBreweryDB](https://www.openbrewerydb.org/#documentation).
 
+## System Requirements
+- Ruby 2.6.8
+- PostgreSQL 9.0+
+- PostGIS 2.4+
+
 ## Running locally
 
 Start up postgres and then run the following commands:
 
 ```
 bundle install
-bundle exec rake db:create db:migrate db:seed
+bundle exec rake db:create db:migrate
 bundle exec rails s
+```
+
+**NOTE**
+The activerecord-postgis-adapter should attaching the PostGIS extension to your database, but if there are problems, the following commands can be run to reset the database and to attach PostGIS manually:
+```
+rake db:migrate:reset
+rake db:gis:setup
 ```
 
 ## Running tests
@@ -26,12 +38,13 @@ Route for breweries within a given distance of a point, sorted by distance.
 http://localhost:3000/breweries/search?latitude=40.0190131&longitude=-105.2752297&distance=10
 ```
 
-Parameters
-|Name     |Type | Description       | Example   |
-|---------|-----|-------------------|-----------|
-|latitude |float|latitude of point  |40.0190131 |
-|longitude|float|longitude of point |-105.2752  |
-|distance |float|radius to search in|10.5       |
+### Request Parameters
+
+|Name     |Type | Description           | Example   |
+|---------|-----|-----------------------|-----------|
+|latitude |float|latitude of point      |40.0190131 |
+|longitude|float|longitude of point     |-105.2752  |
+|distance |float|radius to search(miles)|10.5       |
 
 ### Response structure
 
@@ -80,7 +93,7 @@ Parameters
 ```
 
 ## How it works
-The OpenBrewery API is an open service with no authenication, thus subject to downtime or performance issues. In order to mitigate these concerns, this server does the following:
+The OpenBrewery API is an open service with no authentication, thus subject to downtime or performance issues. In order to mitigate these concerns, this server does the following:
 
 1) Any request that hits the brewery server will first hit the cache using the lat/lon coordinates, leveraging PostGIS to achieve efficiency. 
 2) The result for this query will be compared with the request parameters to determine if the search area requested is completely within the cached result. If this is case, the cached result will be leveraged and any results that are not applicable will be filtered down before the JSON response to returned to the client.
@@ -89,9 +102,9 @@ The OpenBrewery API is an open service with no authenication, thus subject to do
 
 ## Things to improve on
 1) Test coverage is very sparse right now. The following should be added as scenarios and assertions:
-  • Cache hits within search radius
-  • Cache misses/failures
-  • Assertions on the service requests made, including paged results
+  - Cache hits within search radius
+  - Cache misses/failures
+  - Assertions on the service requests made, including paged results
 2) If the requested search is a superset of the retrieved cache result, the previous cached result should be deleted once the fetched search results are all retrieved. 
 3) Memcache can be leveraged to improve response times. 
 4) The SQL statements can likely be further optimized. Additionally cached results from 2+ regions could potentially contain the requested search region. 
